@@ -61,11 +61,19 @@ const questions = [
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data);
+    fs.writeFile(fileName, data, function(err){
+        if(err){
+            console.error(err);
+        } else{
+            console.log("All done. Check the files for your readme")
+        }
+    })
+    
 }
 
 // TODO: Create a function to initialize app
 function init() {
+    let data;
     inq.prompt(
         {
         type: "confirm",
@@ -73,17 +81,19 @@ function init() {
         name: "truthy"
         }
     ).then((response) =>{
-        if(response.truthy){
-            inq.prompt(questions).then((responses)=>{
-                let dataObj= {};
-                let resKeys= Object.keys(responses);
-                for(const key of resKeys){
-                    dataObj[`${key}`]= responses[`${key}`];
-                }
-                gMark(dataObj);
+        if(response){
+            inq.prompt(questions).then((answers)=>{
+                data = gMark(answers);
+                writeToFile("readme.md", data);
             })
         } else{
             return;
+        }
+    }).catch((err)=>{
+        if(!err){
+            console.log("building readme...");
+        } else{
+            throw(err);
         }
     })
 }
