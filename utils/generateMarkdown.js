@@ -78,7 +78,7 @@ function renderLicenseSection(license, badge, link) {
   ## 6.Test Instructions:
   ${data.test}
 
-${section}
+  ``${section}``
 
   <a name="link"></a>
   ### 8.Links

@@ -81,7 +81,8 @@ function init() {
         name: "truthy"
         }
     ).then((response) =>{
-        if(response){
+        console.log(response.truthy);
+        if(response.truthy==true){
             inq.prompt(questions).then((answers)=>{
                 data = gMark(answers);
                 writeToFile("readme.md", data);
